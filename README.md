@@ -12,7 +12,8 @@ correct answers.
 
 ### Resources
 This game makes use of a few free resources from the internet.
-Game music is from: https://patrickdearteaga.com/arcade-music/
-Wizard sprites is from: https://opengameart.org/content/sorlo-ultimate-smash-friends
-Explosion sprites are from: https://www.sccpre.cat/show/iwxbomx_explosion-sprite-sheet-2d-explosion-sprite-sheet/
+
+- Game music is from: https://patrickdearteaga.com/arcade-music/
+- Wizard sprites is from: https://opengameart.org/content/sorlo-ultimate-smash-friends
+- Explosion sprites are from: https://www.sccpre.cat/show/iwxbomx_explosion-sprite-sheet-2d-explosion-sprite-sheet/
  
