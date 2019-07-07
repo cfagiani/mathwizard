@@ -1,10 +1,9 @@
 import os
+import pygame
 import random
 
-import pygame
-
-from common import Scene
 from config import configvalues
+from scenes.common import Scene
 
 OPERATORS = ['+', '-']
 
@@ -222,6 +221,8 @@ class Equation:
         self.ticks_per_image = 2
         self.tick = 0
         self.exploding = False
+        self.has_exploded = False
+        self.old_text = None
         self.pos_idx = 0
         self.delay = 0
         self.images = sprite_sheet.images_at([
@@ -242,6 +243,9 @@ class Equation:
         self.animation_index = 0
         self.ticks_per_image = 2
         self.tick = 0
+        if self.exploding:
+            self.has_exploded = True
+            self.old_text = self.text
         self.exploding = False
         cor = random.randint(1, 10)
         if cor > configvalues.INCORRECT_ANSWER_RATIO:
@@ -307,11 +311,13 @@ class Equation:
         :return:
         """
         if self.delay <= 1 and not self.exploding:
+            self.has_exploded = False
             self.prev_pos = self.pos
             self.pos = (self.pos[0], self.pos[1] + self.step)
             if self.pos[1] >= top_of_floor:
                 return True
         elif self.exploding:
+            self.prev_pos = self.pos
             self.tick += 1
             if self.tick > self.ticks_per_image:
                 self.tick = 0
@@ -321,6 +327,7 @@ class Equation:
                     return True
 
         self.delay -= 1
+        return False
 
     def render(self, screen):
         """
@@ -341,14 +348,21 @@ class Equation:
             return [pygame.Rect(self.pos[0], self.pos[1], img_w, img_h),
                     pygame.Rect(self.prev_pos[0], self.prev_pos[1], self.text.get_width(),
                                 self.text.get_height())]
+        elif self.has_exploded:
+            img_w, img_h = self.images[len(self.images) - 1].get_rect().size
+            return [pygame.Rect(self.prev_pos[0], self.prev_pos[1], img_w,
+                            img_h)]
         else:
             return []
+
 
     def is_correct(self):
         return self.correct
 
+
     def get_pos_idx(self):
         return self.pos_idx
+
 
     def get_pos(self):
         return self.pos

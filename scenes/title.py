@@ -2,9 +2,9 @@ import os
 
 import pygame
 
-from common import Scene
+from scenes.common import Scene
 from config import configvalues
-from game import GameScene
+from scenes.game import GameScene
 
 
 class TitleScene(Scene):
